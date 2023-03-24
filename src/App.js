@@ -33,7 +33,6 @@ export default function App() {
 
     const { name, age, gender, email, phone, canReachByViber, fbLink, fbName, position } = formData
 
-    console.log(position)
     return (
         <div className="app">
             <div className="top-header">

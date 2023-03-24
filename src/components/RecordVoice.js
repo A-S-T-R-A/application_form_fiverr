@@ -8,12 +8,18 @@ export function RecordVoice({ formData, setFormData }) {
 
         setFormData(prev => ({ ...prev, voice: url }))
     }
+    console.log(formData.voice)
 
     return (
         <section className="voice">
             <h4 className="title">Voice recording</h4>
             {formData.voice ? (
-                <audio src={formData.voice} controls />
+                <>
+                    <audio src={formData.voice} controls />
+                    <button onClick={() => setFormData(prev => ({ ...prev, voice: "" }))}>
+                        Delete
+                    </button>
+                </>
             ) : (
                 <AudioRecorder
                     onRecordingComplete={blob => addAudioElement(blob)}

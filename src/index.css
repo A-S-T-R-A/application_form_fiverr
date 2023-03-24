@@ -222,6 +222,7 @@ section {
 section.voice {
   min-height: 188px;
   margin-bottom: 40px;
+  padding: 20px;
 }
 
 section.resume {
@@ -337,7 +338,6 @@ label {
 }
 
 @media(max-width:800px) {
-
   .formContainer {
     display: flex;
     flex-direction: column;
