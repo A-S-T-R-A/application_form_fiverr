@@ -5,7 +5,7 @@ import "filepond/dist/filepond.min.css"
 
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 function UploadFile({ setFormData }) {
     registerPlugin(FilePondPluginFileValidateSize, FilePondPluginFileValidateType)
@@ -14,23 +14,26 @@ function UploadFile({ setFormData }) {
 
     const storage = getStorage()
 
-    useEffect(() => {
-        if (!nfiles[0]?.files) return
+    function updateHandler(files) {
+        if (files[0]?.file) {
+            const file = files[0].file
+            const rand = (Math.random() * 100000000).toFixed()
+            const resumeRef = ref(storage, `resume${rand}`)
 
-        const file = nfiles[0].files
-        const rand = (Math.random() * 100000000).toFixed()
-        const mountainsRef = ref(storage, `resume${rand}`)
+            uploadBytes(resumeRef, file).then(snapshot => {
+                getDownloadURL(resumeRef)
+                    .then(url => {
+                        console.log("first")
+                        setFormData(prev => ({ ...prev, resumeFile: url }))
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            })
+        }
 
-        uploadBytes(mountainsRef, file).then(snapshot => {
-            getDownloadURL(mountainsRef)
-                .then(url => {
-                    setFormData(prev => ({ ...prev, resumeFile: url }))
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-        })
-    }, [nfiles])
+        setNfiles(files)
+    }
 
     return (
         <section className="resume">
@@ -39,7 +42,7 @@ function UploadFile({ setFormData }) {
                 files={nfiles}
                 allowReorder={false}
                 allowMultiple={false}
-                onupdatefiles={setNfiles}
+                onupdatefiles={updateHandler}
                 labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
                 acceptedFileTypes={[
                     "application/msword",

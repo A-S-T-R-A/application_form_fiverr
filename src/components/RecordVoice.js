@@ -1,8 +1,11 @@
 import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder"
 import { BsFillTrashFill } from "react-icons/bs"
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
 
 export function RecordVoice({ setFormData }) {
     const recorderControls = useAudioRecorder()
+
+    const storage = getStorage()
 
     const addAudioElement = blob => {
         if (document.querySelector("#audio")) {
@@ -14,7 +17,20 @@ export function RecordVoice({ setFormData }) {
         audio.controls = true
         audio.id = "audio"
         document.querySelector(".voiceContainer").appendChild(audio)
-        setFormData(prev => ({ ...prev, voice: url }))
+
+        const rand = (Math.random() * 100000000).toFixed()
+        const voiceRef = ref(storage, `voice${rand}`)
+
+        uploadBytes(voiceRef, blob).then(snapshot => {
+            getDownloadURL(voiceRef)
+                .then(url => {
+                    console.log(url)
+                    setFormData(prev => ({ ...prev, voice: url }))
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        })
     }
 
     function deleteBlobHandler() {
