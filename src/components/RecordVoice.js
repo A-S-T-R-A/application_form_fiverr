@@ -1,68 +1,44 @@
 import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder"
+import { BsFillTrashFill } from "react-icons/bs"
 
-export function RecordVoice({ formData, setFormData }) {
+export function RecordVoice({ setFormData }) {
     const recorderControls = useAudioRecorder()
 
     const addAudioElement = blob => {
-        const url = URL.createObjectURL(blob)
-
-        setFormData(prev => ({ ...prev, voice: url }))
-    }
-    console.log(formData.voice)
-
-    return (
-        <section className="voice">
-            <h4 className="title">Voice recording</h4>
-            {formData.voice ? (
-                <>
-                    <audio src={formData.voice} controls />
-                    <button onClick={() => setFormData(prev => ({ ...prev, voice: "" }))}>
-                        Delete
-                    </button>
-                </>
-            ) : (
-                <AudioRecorder
-                    onRecordingComplete={blob => addAudioElement(blob)}
-                    recorderControls={recorderControls}
-                />
-            )}
-        </section>
-    )
-}
-
-/*  <button onClick={recorderControls.stopRecording}>Stop recording</button> */
-
-/* const recorderControls = useAudioRecorder()
-    const addAudioElement = blob => {
+        if (document.querySelector("#audio")) {
+            document.querySelector(".voiceContainer").removeChild(document.querySelector("#audio"))
+        }
         const url = URL.createObjectURL(blob)
         const audio = document.createElement("audio")
         audio.src = url
         audio.controls = true
-        document.body.appendChild(audio)
-    } */
+        audio.id = "audio"
+        document.querySelector(".voiceContainer").appendChild(audio)
+        setFormData(prev => ({ ...prev, voice: blob }))
+    }
 
-/*  */
-/* 
-      Applies passed classes to audio recorder container
-     
-AudioRecorderClass?: string;
+    function deleteBlobHandler() {
+        document.querySelector(".voiceContainer").removeChild(document.querySelector("#audio"))
+        setFormData(prev => ({ ...prev, voice: "" }))
+    }
 
-  Applies passed classes to audio recorder start/save option
- 
-AudioRecorderStartSaveClass?: string;
-
-  Applies passed classes to audio recorder timer
- 
-AudioRecorderTimerClass?: string;
-
-  Applies passed classes to audio recorder status option
- 
-AudioRecorderStatusClass?: string;
-
-  Applies passed classes to audio recorder pause/resume option
-
-AudioRecorderPauseResumeClass?: string;
-
-  Applies passed classes to audio recorder discard option
- 
-AudioRecorderDiscardClass?: string; */
+    return (
+        <section className="voice">
+            <h4 className="title">Voice recording</h4>
+            <AudioRecorder
+                onRecordingComplete={blob => addAudioElement(blob)}
+                recorderControls={recorderControls}
+            />
+            <div className="voiceContainer">
+                <button
+                    className="voice__discard__btn btn"
+                    onClick={deleteBlobHandler}
+                    type="button"
+                >
+                    <BsFillTrashFill className="voice__delete__btn__icon" />
+                    Delete
+                </button>
+            </div>
+        </section>
+    )
+}

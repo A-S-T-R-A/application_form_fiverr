@@ -273,6 +273,19 @@ section.resume {
   bottom: 0;
 }
 
+.voiceContainer {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+
+#audio {
+  display: block;
+  margin-right: auto;
+  height: 40px;
+}
+
 .btnContainer {
   margin-top: auto;
 }
@@ -307,13 +320,23 @@ section.resume {
   background-color: red;
 }
 
-.resumeDeleteBtn:hover {
+.resumeDeleteBtn:hover,
+.voice__discard__btn:hover {
   background-color: rgb(188, 0, 0);
 }
 
 
 .btnIcon {
   margin-right: 10px;
+}
+
+.voice__discard__btn {
+  background-color: red;
+  cursor: pointer;
+}
+
+.voice__delete__btn__icon {
+  margin-right: 8px;
 }
 
 /* Typography */
