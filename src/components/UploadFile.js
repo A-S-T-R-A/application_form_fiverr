@@ -59,7 +59,7 @@ function UploadFile({ setFormData }) {
                     <>
                         <input {...getInputProps()} />
                         <p className="resumeTitle">
-                            Drag photos here or select them from your computer
+                            Drag resume here or select them from your computer
                         </p>
                         <p className="resumeText">Upload PDF, DOC or DOCX files up to 5 MB each</p>
                         <button type="button" className="resumeBtn btn">
