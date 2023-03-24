@@ -1,8 +1,12 @@
+import { useState } from "react"
 import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder"
 import { BsFillTrashFill } from "react-icons/bs"
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
+import { Loader } from "./Loader/Loader"
 
-export function RecordVoice({ setFormData }) {
+export function RecordVoice({ formData, setFormData }) {
+    const [loading, setLoading] = useState(false)
+
     const recorderControls = useAudioRecorder()
 
     const storage = getStorage()
@@ -11,6 +15,11 @@ export function RecordVoice({ setFormData }) {
         if (document.querySelector("#audio")) {
             document.querySelector(".voiceContainer").removeChild(document.querySelector("#audio"))
         }
+
+        if (!formData.voice) {
+            setLoading(true)
+        }
+
         const url = URL.createObjectURL(blob)
         const audio = document.createElement("audio")
         audio.src = url
@@ -24,11 +33,13 @@ export function RecordVoice({ setFormData }) {
         uploadBytes(voiceRef, blob).then(snapshot => {
             getDownloadURL(voiceRef)
                 .then(url => {
-                    console.log(url)
                     setFormData(prev => ({ ...prev, voice: url }))
                 })
                 .catch(error => {
                     console.log(error)
+                })
+                .finally(() => {
+                    setLoading(false)
                 })
         })
     }
@@ -41,20 +52,28 @@ export function RecordVoice({ setFormData }) {
     return (
         <section className="voice">
             <h4 className="title">Voice recording</h4>
-            <AudioRecorder
-                onRecordingComplete={blob => addAudioElement(blob)}
-                recorderControls={recorderControls}
-            />
-            <div className="voiceContainer">
-                <button
-                    className="voice__discard__btn btn"
-                    onClick={deleteBlobHandler}
-                    type="button"
-                >
-                    <BsFillTrashFill className="voice__delete__btn__icon" />
-                    Delete
-                </button>
-            </div>
+            {loading ? (
+                <div className="voiceLoader">
+                    <Loader />
+                </div>
+            ) : (
+                <>
+                    <AudioRecorder
+                        onRecordingComplete={blob => addAudioElement(blob)}
+                        recorderControls={recorderControls}
+                    />
+                    <div className="voiceContainer">
+                        <button
+                            className="voice__discard__btn btn"
+                            onClick={deleteBlobHandler}
+                            type="button"
+                        >
+                            <BsFillTrashFill className="voice__delete__btn__icon" />
+                            Delete
+                        </button>
+                    </div>
+                </>
+            )}
         </section>
     )
 }
