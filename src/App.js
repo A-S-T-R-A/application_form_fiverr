@@ -2,6 +2,8 @@ import { useState } from "react"
 import "./index.css"
 import UploadFile from "./components/UploadFile.js"
 import { RecordVoice } from "./components/RecordVoice.js"
+import { firestore } from "./firebase"
+import { addDoc, collection } from "@firebase/firestore"
 
 const initialData = {
     position: "phoneRepresentative",
@@ -20,9 +22,22 @@ const initialData = {
 export default function App() {
     const [formData, setFormData] = useState(initialData)
 
-    function submitHandler(e) {
+    const ref = collection(firestore, "applications")
+
+    async function submitHandler(e) {
         e.preventDefault()
-        console.log(formData)
+
+        const data = { ...formData, date: new Date() }
+
+        try {
+            addDoc(ref, data)
+        } catch (err) {
+            console.log(err)
+        }
+
+        if (document.querySelector("#audio")) {
+            document.querySelector(".voiceContainer").removeChild(document.querySelector("#audio"))
+        }
 
         setFormData(initialData)
     }
@@ -32,6 +47,7 @@ export default function App() {
     }
 
     const { name, age, gender, email, phone, canReachByViber, fbLink, fbName, position } = formData
+    console.log(formData)
 
     return (
         <div className="app">
@@ -225,7 +241,7 @@ export default function App() {
 
                                 <div className="formRight">
                                     <RecordVoice formData={formData} setFormData={setFormData} />
-                                    <UploadFile />
+                                    <UploadFile setFormData={setFormData} />
 
                                     <div className="btnContainer">
                                         <button className="btn">Submit</button>

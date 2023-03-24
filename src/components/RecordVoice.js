@@ -14,7 +14,7 @@ export function RecordVoice({ setFormData }) {
         audio.controls = true
         audio.id = "audio"
         document.querySelector(".voiceContainer").appendChild(audio)
-        setFormData(prev => ({ ...prev, voice: blob }))
+        setFormData(prev => ({ ...prev, voice: url }))
     }
 
     function deleteBlobHandler() {

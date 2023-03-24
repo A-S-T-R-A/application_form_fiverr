@@ -39,7 +39,7 @@ function UploadFile({ setFormData }) {
     }
 
     function dropAcceptedHandler(files) {
-        setFormData(prev => ({ ...prev, resumeFile: files[0] }))
+        setFormData(prev => ({ ...prev, resumeFile: files[0].path }))
     }
 
     return (
