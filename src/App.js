@@ -21,6 +21,7 @@ const initialData = {
 
 export default function App() {
     const [formData, setFormData] = useState(initialData)
+    const [nfiles, setNfiles] = useState([])
 
     const ref = collection(firestore, "applications")
 
@@ -28,7 +29,7 @@ export default function App() {
         e.preventDefault()
 
         const data = { ...formData, date: new Date() }
-        console.log(formData)
+
         try {
             addDoc(ref, data)
         } catch (err) {
@@ -38,7 +39,7 @@ export default function App() {
         if (document.querySelector("#audio")) {
             document.querySelector(".voiceContainer").removeChild(document.querySelector("#audio"))
         }
-
+        setNfiles([])
         setFormData(initialData)
     }
 
@@ -240,7 +241,11 @@ export default function App() {
 
                                 <div className="formRight">
                                     <RecordVoice formData={formData} setFormData={setFormData} />
-                                    <UploadFile setFormData={setFormData} />
+                                    <UploadFile
+                                        setFormData={setFormData}
+                                        setNfiles={setNfiles}
+                                        nfiles={nfiles}
+                                    />
 
                                     <div className="btnContainer">
                                         <button className="btn">Submit</button>

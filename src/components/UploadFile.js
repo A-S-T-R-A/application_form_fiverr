@@ -2,15 +2,10 @@ import { FilePond, registerPlugin } from "react-filepond"
 import FilePondPluginFileValidateSize from "filepond-plugin-file-validate-size"
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type"
 import "filepond/dist/filepond.min.css"
-
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
 
-import { useState } from "react"
-
-function UploadFile({ setFormData }) {
+function UploadFile({ setFormData, nfiles, setNfiles }) {
     registerPlugin(FilePondPluginFileValidateSize, FilePondPluginFileValidateType)
-
-    const [nfiles, setNfiles] = useState([])
 
     const storage = getStorage()
 
@@ -23,7 +18,6 @@ function UploadFile({ setFormData }) {
             uploadBytes(resumeRef, file).then(snapshot => {
                 getDownloadURL(resumeRef)
                     .then(url => {
-                        console.log("first")
                         setFormData(prev => ({ ...prev, resumeFile: url }))
                     })
                     .catch(error => {
