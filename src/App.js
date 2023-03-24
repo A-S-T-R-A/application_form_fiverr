@@ -28,7 +28,7 @@ export default function App() {
         e.preventDefault()
 
         const data = { ...formData, date: new Date() }
-
+        console.log(formData)
         try {
             addDoc(ref, data)
         } catch (err) {
@@ -47,7 +47,6 @@ export default function App() {
     }
 
     const { name, age, gender, email, phone, canReachByViber, fbLink, fbName, position } = formData
-    console.log(formData)
 
     return (
         <div className="app">
