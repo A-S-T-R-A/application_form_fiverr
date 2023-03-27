@@ -64,39 +64,6 @@ export default function App() {
             </div>
             <div className="wrapper">
                 <div className="container">
-                    <header className="header">
-                        <h1 className="header__title">Position applying for</h1>
-                        <div className="toggleContainer">
-                            <div
-                                className={`toggle ${
-                                    position === "phoneRepresentative" ? "active" : ""
-                                }`}
-                                onClick={() =>
-                                    setFormData(prev => ({
-                                        ...prev,
-                                        position: "phoneRepresentative",
-                                    }))
-                                }
-                            >
-                                <h5 className="toggleTitle">Phone representative</h5>
-                                <p className="toggleText">60k/month</p>
-                            </div>
-                            <div
-                                className={`toggle ${
-                                    position === "nonVoiceAssistant" ? "active" : ""
-                                }`}
-                                onClick={() =>
-                                    setFormData(prev => ({
-                                        ...prev,
-                                        position: "nonVoiceAssistant",
-                                    }))
-                                }
-                            >
-                                <h5 className="toggleTitle">Non-voice assistant</h5>
-                                <p className="toggleText">20k/month</p>
-                            </div>
-                        </div>
-                    </header>
                     <main>
                         <form action="submit" className="form" onSubmit={submitHandler}>
                             <div className="formContainer">
@@ -246,17 +213,53 @@ export default function App() {
                                 </section>
 
                                 <div className="formRight">
+                                    <section className="header-section">
+                                        <h1 className="header__title">Position applying for</h1>
+                                        <div className="toggleContainer">
+                                            <div
+                                                className={`toggle ${
+                                                    position === "phoneRepresentative"
+                                                        ? "active"
+                                                        : ""
+                                                }`}
+                                                onClick={() =>
+                                                    setFormData(prev => ({
+                                                        ...prev,
+                                                        position: "phoneRepresentative",
+                                                    }))
+                                                }
+                                            >
+                                                <h5 className="toggleTitle">
+                                                    Phone representative
+                                                </h5>
+                                                <p className="toggleText">60k/month</p>
+                                            </div>
+                                            <div
+                                                className={`toggle ${
+                                                    position === "nonVoiceAssistant" ? "active" : ""
+                                                }`}
+                                                onClick={() =>
+                                                    setFormData(prev => ({
+                                                        ...prev,
+                                                        position: "nonVoiceAssistant",
+                                                    }))
+                                                }
+                                            >
+                                                <h5 className="toggleTitle">Non-voice assistant</h5>
+                                                <p className="toggleText">20k/month</p>
+                                            </div>
+                                        </div>
+                                    </section>
                                     <RecordVoice formData={formData} setFormData={setFormData} />
                                     <UploadFile
                                         setFormData={setFormData}
                                         setNfiles={setNfiles}
                                         nfiles={nfiles}
                                     />
-
-                                    <div className="btnContainer">
-                                        <button className="btn">Submit</button>
-                                    </div>
                                 </div>
+                            </div>
+                            <div className="btnContainer">
+                                <button className="btn">Submit</button>
                             </div>
                         </form>
                     </main>
