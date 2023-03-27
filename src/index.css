@@ -69,7 +69,8 @@ body {
 
 .header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
   padding: 50px 0;
   width: 100%;
 }
@@ -352,7 +353,7 @@ section.resume {
 
 .header h1 {
   font-weight: 700;
-  font-size: 36px;
+  font-size: 30px;
 }
 
 .title {
@@ -411,4 +412,18 @@ label {
     font-weight: 700;
     font-size: 28px;
   }
+}
+
+.voiceRecorder {
+  height: 60px;
+  min-width: 60px !important;
+  border-radius: 50px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.voiceRecorder>img {
+  width: 80%;
+  height: 80%;
 }

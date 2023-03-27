@@ -69,6 +69,7 @@ export function RecordVoice({ formData, setFormData }) {
                     <AudioRecorder
                         onRecordingComplete={blob => addAudioElement(blob)}
                         recorderControls={recorderControls}
+                        classes={{ AudioRecorderClass: "voiceRecorder" }}
                     />
                     <div className="voiceContainer">
                         <button

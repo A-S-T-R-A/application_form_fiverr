@@ -27,6 +27,12 @@ export default function App() {
 
     async function submitHandler(e) {
         e.preventDefault()
+        if (!formData.voice) {
+            alert(
+                "Voice clip is a mandatory field. You cannot apply if you do not send your voice clip"
+            )
+            return
+        }
 
         const data = { ...formData, date: new Date() }
 
@@ -53,13 +59,13 @@ export default function App() {
         <div className="app">
             <div className="top-header">
                 <div className="top-header-container">
-                    <h1>Application for job</h1>
+                    <h1>JOB APPLICATION</h1>
                 </div>
             </div>
             <div className="wrapper">
                 <div className="container">
                     <header className="header">
-                        <h1>Position applying for</h1>
+                        <h1 className="header__title">Position applying for</h1>
                         <div className="toggleContainer">
                             <div
                                 className={`toggle ${
@@ -87,7 +93,7 @@ export default function App() {
                                 }
                             >
                                 <h5 className="toggleTitle">Non-voice assistant</h5>
-                                <p className="toggleText">40k/month</p>
+                                <p className="toggleText">20k/month</p>
                             </div>
                         </div>
                     </header>
@@ -215,18 +221,6 @@ export default function App() {
                                     </div>
 
                                     <div className="inputContainer">
-                                        <label htmlFor="fbLink">Facebook profile link</label>
-                                        <input
-                                            placeholder="Paste facebook profile link here"
-                                            id="fbLink"
-                                            value={fbLink}
-                                            onChange={e =>
-                                                inputChangeHandler(e.target.value, "fbLink")
-                                            }
-                                        />
-                                    </div>
-
-                                    <div className="inputContainer">
                                         <label htmlFor="fbName">Facebook profile name</label>
                                         <input
                                             placeholder="Mention facebook profile name here "
@@ -234,6 +228,18 @@ export default function App() {
                                             value={fbName}
                                             onChange={e =>
                                                 inputChangeHandler(e.target.value, "fbName")
+                                            }
+                                        />
+                                    </div>
+
+                                    <div className="inputContainer">
+                                        <label htmlFor="fbLink">Facebook profile link</label>
+                                        <input
+                                            placeholder="Paste facebook profile link here"
+                                            id="fbLink"
+                                            value={fbLink}
+                                            onChange={e =>
+                                                inputChangeHandler(e.target.value, "fbLink")
                                             }
                                         />
                                     </div>
