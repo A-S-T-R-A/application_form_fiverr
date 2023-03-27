@@ -51,7 +51,15 @@ export function RecordVoice({ formData, setFormData }) {
 
     return (
         <section className="voice">
-            <h4 className="title">Voice recording</h4>
+            <div className="voice__header">
+                <h4 className="voice__title title">Voice recording</h4>
+                <p>
+                    Record a voice for up to 5 minutes: <br />
+                    Please leave a voice clip introducing yourself and describe any
+                    related work experience.
+                </p>
+            </div>
+
             {loading ? (
                 <div className="voiceLoader">
                     <Loader />

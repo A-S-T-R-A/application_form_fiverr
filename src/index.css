@@ -256,19 +256,33 @@ section.resume {
   text-align: center;
 }
 
+.resume__header {
+  margin-bottom: 32px;
+}
+
+.resume__title {
+  margin-bottom: 5px;
+}
+
 .resumeError {
   color: red;
   position: absolute;
   bottom: 0;
 }
 
-
-
 .voiceContainer {
   margin-top: 20px;
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
+}
+
+.voice__title {
+  margin-bottom: 5px;
+}
+
+.voice__header {
+  margin-bottom: 32px;
 }
 
 #audio {

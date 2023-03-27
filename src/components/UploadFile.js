@@ -40,7 +40,10 @@ function UploadFile({ setFormData, nfiles, setNfiles }) {
 
     return (
         <section className="resume">
-            <h4 className="title">Resume uploading</h4>
+            <div className="resume__header">
+                <h4 className="resume__title title">Resume uploading</h4>
+                <p>Upload resume in .doc OR .pdf format only</p>
+            </div>
 
             {loading ? (
                 <div className="resumeLoaderContainer">
