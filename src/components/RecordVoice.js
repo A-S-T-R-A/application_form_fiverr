@@ -13,7 +13,9 @@ export function RecordVoice({ formData, setFormData }) {
 
     const addAudioElement = blob => {
         if (document.querySelector("#audio")) {
-            document.querySelector(".voiceContainer").removeChild(document.querySelector("#audio"))
+            document
+                .querySelector(".voiceRecordContainer")
+                .removeChild(document.querySelector("#audio"))
         }
 
         if (!formData.voice) {
@@ -25,7 +27,8 @@ export function RecordVoice({ formData, setFormData }) {
         audio.src = url
         audio.controls = true
         audio.id = "audio"
-        document.querySelector(".voiceContainer").appendChild(audio)
+        document.querySelector(".voiceRecordContainer").appendChild(audio)
+        document.querySelector(".voiceContainer").style.opacity = "1"
 
         const rand = (Math.random() * 100000000).toFixed()
         const voiceRef = ref(storage, `voice${rand}`)
@@ -45,14 +48,21 @@ export function RecordVoice({ formData, setFormData }) {
     }
 
     function deleteBlobHandler() {
-        document.querySelector(".voiceContainer").removeChild(document.querySelector("#audio"))
-        setFormData(prev => ({ ...prev, voice: "" }))
+        if (document.querySelector("#audio")) {
+            document
+                .querySelector(".voiceRecordContainer")
+                .removeChild(document.querySelector("#audio"))
+            setFormData(prev => ({ ...prev, voice: "" }))
+            document.querySelector(".voiceContainer").style.opacity = "0"
+        }
     }
 
     return (
         <section className="voice">
             <div className="voice__header">
-                <h4 className="voice__title title">Voice recording</h4>
+                <h4 className="voice__title title">
+                    Voice recording<span className="required">*</span>
+                </h4>
                 <p>
                     Please leave a voice clip introducing yourself and describe any
                     related work experience.
@@ -65,12 +75,16 @@ export function RecordVoice({ formData, setFormData }) {
                 </div>
             ) : (
                 <>
-                    <AudioRecorder
-                        onRecordingComplete={blob => addAudioElement(blob)}
-                        recorderControls={recorderControls}
-                        classes={{ AudioRecorderClass: "voiceRecorder" }}
-                    />
+                    <div className="recordButtonContainer">
+                        <AudioRecorder
+                            onRecordingComplete={blob => addAudioElement(blob)}
+                            recorderControls={recorderControls}
+                            classes={{ AudioRecorderClass: "voiceRecorder" }}
+                        />
+                    </div>
                     <div className="voiceContainer">
+                        <div className="voiceRecordContainer"></div>
+
                         <button
                             className="voice__discard__btn btn"
                             onClick={deleteBlobHandler}

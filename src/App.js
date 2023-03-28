@@ -10,6 +10,7 @@ const initialData = {
     name: "",
     age: "",
     gender: "male",
+    city: "",
     email: "",
     phone: "",
     canReachByViber: false,
@@ -43,7 +44,9 @@ export default function App() {
         }
 
         if (document.querySelector("#audio")) {
-            document.querySelector(".voiceContainer").removeChild(document.querySelector("#audio"))
+            document
+                .querySelector(".voiceRecordContainer")
+                .removeChild(document.querySelector("#audio"))
         }
         setNfiles([])
         setFormData(initialData)
@@ -64,13 +67,50 @@ export default function App() {
             </div>
             <div className="wrapper">
                 <div className="container">
+                    <section className="header-section">
+                        <h1 className="header__title">
+                            Position applying for<span className="required">*</span>
+                        </h1>
+                        <div className="toggleContainer">
+                            <div
+                                className={`toggle ${
+                                    position === "phoneRepresentative" ? "active" : ""
+                                }`}
+                                onClick={() =>
+                                    setFormData(prev => ({
+                                        ...prev,
+                                        position: "phoneRepresentative",
+                                    }))
+                                }
+                            >
+                                <h5 className="toggleTitle">Phone representative</h5>
+                                <p className="toggleText">60k/month</p>
+                            </div>
+                            <div
+                                className={`toggle ${
+                                    position === "nonVoiceAssistant" ? "active" : ""
+                                }`}
+                                onClick={() =>
+                                    setFormData(prev => ({
+                                        ...prev,
+                                        position: "nonVoiceAssistant",
+                                    }))
+                                }
+                            >
+                                <h5 className="toggleTitle">Non-voice assistant</h5>
+                                <p className="toggleText">20k/month</p>
+                            </div>
+                        </div>
+                    </section>
                     <main>
                         <form action="submit" className="form" onSubmit={submitHandler}>
                             <div className="formContainer">
                                 <section className="formLeft">
                                     <h4 className="title">Enter your basic details</h4>
                                     <div className="inputContainer">
-                                        <label htmlFor="name">Full Name</label>
+                                        <label htmlFor="name">
+                                            Full Name<span className="required">*</span>
+                                        </label>
                                         <input
                                             placeholder="Lohn Doe"
                                             id="name"
@@ -83,7 +123,9 @@ export default function App() {
                                     </div>
 
                                     <div className="inputContainer age">
-                                        <label htmlFor="age">Age</label>
+                                        <label htmlFor="age">
+                                            Age<span className="required">*</span>
+                                        </label>
                                         <input
                                             placeholder="Your age"
                                             id="age"
@@ -96,7 +138,9 @@ export default function App() {
                                     </div>
 
                                     <div className="radios">
-                                        <label className="label">Gender</label>
+                                        <label className="label">
+                                            Gender<span className="required">*</span>
+                                        </label>
                                         <div className="radiosContainer">
                                             <div className="radioContainer">
                                                 <input
@@ -147,9 +191,26 @@ export default function App() {
                                     </div>
 
                                     <div className="inputContainer email">
-                                        <label htmlFor="email">Email</label>
+                                        <label htmlFor="city">
+                                            City<span className="required">*</span>
+                                        </label>
                                         <input
-                                            placeholder="Lohn Doe"
+                                            placeholder="Your city"
+                                            id="city"
+                                            value={email}
+                                            onChange={e =>
+                                                inputChangeHandler(e.target.value, "city")
+                                            }
+                                            required
+                                        />
+                                    </div>
+
+                                    <div className="inputContainer email">
+                                        <label htmlFor="email">
+                                            Email<span className="required">*</span>
+                                        </label>
+                                        <input
+                                            placeholder="Your email"
                                             id="email"
                                             value={email}
                                             onChange={e =>
@@ -160,7 +221,9 @@ export default function App() {
                                     </div>
 
                                     <div className="inputContainer mobile">
-                                        <label htmlFor="phone">Mobile</label>
+                                        <label htmlFor="phone">
+                                            Mobile<span className="required">*</span>
+                                        </label>
                                         <input
                                             placeholder="Phone number"
                                             id="phone"
@@ -213,53 +276,16 @@ export default function App() {
                                 </section>
 
                                 <div className="formRight">
-                                    <section className="header-section">
-                                        <h1 className="header__title">Position applying for</h1>
-                                        <div className="toggleContainer">
-                                            <div
-                                                className={`toggle ${
-                                                    position === "phoneRepresentative"
-                                                        ? "active"
-                                                        : ""
-                                                }`}
-                                                onClick={() =>
-                                                    setFormData(prev => ({
-                                                        ...prev,
-                                                        position: "phoneRepresentative",
-                                                    }))
-                                                }
-                                            >
-                                                <h5 className="toggleTitle">
-                                                    Phone representative
-                                                </h5>
-                                                <p className="toggleText">60k/month</p>
-                                            </div>
-                                            <div
-                                                className={`toggle ${
-                                                    position === "nonVoiceAssistant" ? "active" : ""
-                                                }`}
-                                                onClick={() =>
-                                                    setFormData(prev => ({
-                                                        ...prev,
-                                                        position: "nonVoiceAssistant",
-                                                    }))
-                                                }
-                                            >
-                                                <h5 className="toggleTitle">Non-voice assistant</h5>
-                                                <p className="toggleText">20k/month</p>
-                                            </div>
-                                        </div>
-                                    </section>
                                     <RecordVoice formData={formData} setFormData={setFormData} />
                                     <UploadFile
                                         setFormData={setFormData}
                                         setNfiles={setNfiles}
                                         nfiles={nfiles}
                                     />
+                                    <div className="btnContainer">
+                                        <button className="btn">Submit</button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="btnContainer">
-                                <button className="btn">Submit</button>
                             </div>
                         </form>
                     </main>
