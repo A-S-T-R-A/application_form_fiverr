@@ -273,6 +273,9 @@ export default function App() {
                                             }
                                         />
                                     </div>
+                                    <p className="asterisk">
+                                        *Fields marked with asterisk are required
+                                    </p>
                                 </section>
 
                                 <div className="formRight">
