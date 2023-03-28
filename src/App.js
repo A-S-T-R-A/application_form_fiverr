@@ -68,9 +68,7 @@ export default function App() {
             <div className="wrapper">
                 <div className="container">
                     <section className="header-section">
-                        <h1 className="header__title">
-                            Position applying for<span className="required">*</span>
-                        </h1>
+                        <h1 className="header__title">Position applying for</h1>
                         <div className="toggleContainer">
                             <div
                                 className={`toggle ${
